@@ -16,13 +16,9 @@ enum class Cell {
 
 
 
-bool turn; // Global variable which will rotate between true and false to decide each player's turn
-using Board = std::array<Cell, 9>; // Tictactoe board alias
-std::vector<std::vector<int>> winningCombinations; // Vector of winning combinations
-Board board;
+std::array<Cell, 9> board; // Tictactoe board array
+std::vector<std::vector<int>> winningCombinations; // Vector of winning combinations // TODO: Change vector to array or viceversa // TODO: estas 2 ultimas variables no tienen porque ser extern ¿no? // TODO: añadir otra variable que sea un contador de turnos
 
-void initGame(); // Initialize the game setting up the board
-void playTurn(int cellIndex); // Fill the clicked empty square of the board with "X" or "O" according to players' turn
 bool checkWin(); // Will check if last's turn movement is a victory
 
 #endif // GAME_H

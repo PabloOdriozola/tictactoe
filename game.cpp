@@ -1,9 +1,15 @@
 #include "game.h"
+#include "global.h"
 
+bool turn;
+short turnNum;
 
 void initGame() {
     // Create board and initialize it with empty variants
     std::fill(board.begin(),board.end(), Cell::Empty);
+
+    turn = PLAYER1; // First turn for player X
+    turnNum = 1;
 
     winningCombinations = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // rows
@@ -18,6 +24,13 @@ void playTurn(int cellIndex) {
         board[cellIndex] = Cell::X;
     } else {
         board[cellIndex] = Cell::O;
+    }
+
+    turnNum++;
+    if (turnNum == 9) {
+        // TODO: Se acabo el game
+    } else if (turnNum >= 5) { // Game can not have any winner before turn 5, so we don`t waste time checking win condition before it
+        checkWin();
     }
 }
 
