@@ -27,6 +27,8 @@ void playTurn(int cellIndex) {
     }
 
     turnNum++;
+    turn = !turn; // Next player's turn
+
     if (turnNum == 9) {
         // TODO: Se acabo el game
     } else if (turnNum >= 5) { // Game can not have any winner before turn 5, so we don`t waste time checking win condition before it
@@ -42,6 +44,5 @@ bool checkWin() {
             return true; // Win
         }
     }
-    turn = !turn; // Next player's turn
     return false; // Not over yet
 }
