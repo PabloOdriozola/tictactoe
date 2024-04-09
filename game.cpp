@@ -3,46 +3,47 @@
 
 bool turn;
 short turnNum;
+std::array<int, 3> winnerCombo;
 
 void initGame() {
     // Create board and initialize it with empty variants
-    std::fill(board.begin(),board.end(), Cell::Empty);
+    board = {Cell::Empty};
 
     turn = PLAYER1; // First turn for player X
-    turnNum = 1;
+    turnNum = 1; // Turn counter
 
-    winningCombinations = {
-        {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // rows
-        {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // columns
-        {0, 4, 8}, {2, 4, 6}             // diagonals
-    };
+    winnerCombo = {0}; // Winner combo is unkown yet
 }
 
 void playTurn(int cellIndex) {
- // Knowing which cell has been clicked
+    // Knowing which cell has been clicked...
     if (turn == PLAYER1) {
         board[cellIndex] = Cell::X;
     } else {
         board[cellIndex] = Cell::O;
     }
 
-    turnNum++;
+    turnNum++; // Turn counter up
     turn = !turn; // Next player's turn
-
-    if (turnNum == 9) {
-        // TODO: Se acabo el game
-    } else if (turnNum >= 5) { // Game can not have any winner before turn 5, so we don`t waste time checking win condition before it
-        checkWin();
-    }
 }
 
 bool checkWin() {
+    // If any of the possible winning combinations contains the same Cell variant except Empty (i.e. X or O)
     for (const auto& combination: winningCombinations) {
         if (board[combination[0]] == board[combination[1]] &&
             board[combination[1]] == board[combination[2]] &&
             board[combination[0]] != Cell::Empty) {
+
+            winnerCombo = {combination[0], combination[1], combination[2]};
             return true; // Win
         }
     }
     return false; // Not over yet
+}
+
+void restartGame() {
+    board = {Cell::Empty}; // Empty the entire board
+
+    turn = PLAYER1; // First turn for player X
+    turnNum = 1; // Restart turn counter
 }
